@@ -1,0 +1,30 @@
+== Purpose
+
+Create a backup script for raspberry pi to backup the SD card while running to another nfs filesystem. 
+After backup a socond script could be used to transfer the backup to another storage.
+
+== Sources
+
+The scribt is based on
+
+* https://strobelstefan.org/2019/10/21/raspberry-pi-sd-karte-im-livebetrieb-klonen-neue-version/
+* https://strobelstefan.org/2019/10/20/raspberry-pi-image-verkleinern/
+
+== Installation
+
+Copy the script backup_startup.sh to your raspi /root directory and configure the script variables. Make it executable with `chmod +x /root/backup_startup.sh`.
+
+Add the following line to crontab using `sudo crontab -e`.
+
+-----
+* * * * * /root/backup_startup.sh > /dev/null &2>1
+-----
+
+== Provide a NFS share
+
+To use this tool you need to provide a NFS share. Most NAS devices are able to provide NFS shares. If you have shared a folder you have to install this 
+repository in the root of the repository. It's installed in /rpi-backup after executing
+
+-----
+git clone ... 
+-----
