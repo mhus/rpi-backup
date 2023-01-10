@@ -1,5 +1,5 @@
 #!/bin/bash
-
+cd "$(dirname "$0")"
 . ../rpi-backup-config.sh
 
 NAME=${NAME:-$HOSTNAME}
