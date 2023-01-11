@@ -2,8 +2,6 @@
 
 . ../rpi-backup-config.sh
 
-git pull
-
 NAME=${NAME:-$HOSTNAME}
 FILE=$NAME-$(date +"%Y%m%d")-img.gz
 
