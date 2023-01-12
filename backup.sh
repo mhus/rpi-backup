@@ -3,6 +3,7 @@
 . ../rpi-backup-config.sh
 
 NAME=${NAME:-$HOSTNAME}
+FILE=${FILE:-$NAME-$(date +"%Y%m%d")-img.gz}
 
 t=$(smbclient -U $USER $SMB_MOUNT -c "cd /$TARGET/;ls"|grep $NAME-|cut -d \- -f 2)
 ismonth=$(echo $t| grep -c ^$(date +"%Y%m"))
@@ -14,4 +15,6 @@ else
   echo $t
   exit 0  
 fi
+
+export FILE
 ./backup_now.sh
