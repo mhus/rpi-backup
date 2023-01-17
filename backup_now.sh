@@ -20,7 +20,7 @@ if [ -x ../rpi-backup-start.sh ]; then
 fi
 
 echo $(date +"%Y-%m-%d %H-%M-%S") Backup to $FILE
-dd if=/dev/mmcblk0 bs=$DD_BS | gzip - | smbclient -U $USER --m $SMB_PROTOCOL -b $SMB_BUFFER $SMB_MOUNT -c "cd /$TARGET/;put - $FILE" || removeFile
+dd if=/dev/mmcblk0 bs=$DD_BS | gzip - | smbclient -U $USER -m $SMB_PROTOCOL -b $SMB_BUFFER $SMB_MOUNT -c "cd /$TARGET/;put - $FILE" || removeFile
 
 if [ -x ../rpi-backup-end.sh ]; then
   echo $(date +"%Y-%m-%d %H-%M-%S") Backup end script
