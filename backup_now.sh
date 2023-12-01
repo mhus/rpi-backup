@@ -7,6 +7,7 @@ FILE=${FILE:-$NAME-$(date +"%Y%m%d-%H%M")-img.gz}
 DD_BS=${BS:-100M}
 SMB_BUFFER=${SMB_BUFFER:-1024000}
 SMB_PROTOCOL=${SMB_PROTOCOL:-SMB3}
+NICE=${NICE:-15}
 
 removeFile() {
   echo "Remove File"
@@ -20,7 +21,7 @@ if [ -x ../rpi-backup-start.sh ]; then
 fi
 
 echo $(date +"%Y-%m-%d %H-%M-%S") Backup to $FILE
-dd if=/dev/mmcblk0 bs=$DD_BS | gzip - | smbclient -U $USER -m $SMB_PROTOCOL -b $SMB_BUFFER $SMB_MOUNT -c "cd /$TARGET/;put - $FILE" || removeFile
+nice -n $NICE dd if=/dev/mmcblk0 bs=$DD_BS | nice -n $NICE gzip - | nice -n $NICE smbclient -U $USER -m $SMB_PROTOCOL -b $SMB_BUFFER $SMB_MOUNT -c "cd /$TARGET/;put - $FILE" || removeFile
 
 if [ -x ../rpi-backup-end.sh ]; then
   echo $(date +"%Y-%m-%d %H-%M-%S") Backup end script
